@@ -8,12 +8,7 @@ import { Component, OnInit } from '@angular/core';
       <input type="text" class="search-input" placeholder="Search">
 
       <div class="items-list">
-        <app-list-item></app-list-item>
-        <app-list-item></app-list-item>
-        <app-list-item></app-list-item>
-        <app-list-item></app-list-item>
-        <app-list-item></app-list-item>
-        <app-list-item></app-list-item>
+        <app-list-item [headerText]="'this is header'" [bodyText]="'this is body'"></app-list-item>
       </div>
       
       <!-- <div class="container-box"></div>
