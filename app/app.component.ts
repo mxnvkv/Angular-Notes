@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   styleUrls: ['./app.component.sass'],
   template: `
-    <div>Project {{ title }} works!</div>
     <router-outlet></router-outlet>
   `
 })
