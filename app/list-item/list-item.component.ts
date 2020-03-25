@@ -1,22 +1,25 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-list-item',
   styleUrls: ['./list-item.component.sass'],
   template: `
-    <div class="list-item">
-      <div class="list-item-cross"></div>
+    <div #listItem class="list-item">
+      
+      <a [routerLink]="link">
+        <div class="list-item-content">
+          <h1>{{ headerText }}</h1>
 
-      <div class="list-item-content">
-        <h1>{{ headerText }}</h1>
+          <div class="text-wrapper">
+            <p>{{ bodyText }}<p>
 
-        <div class="text-wrapper">
-          <p>{{ bodyText }}<p>
-
-          <div class="shadow"></div>
+            <div class="shadow"></div>
+          </div>
         </div>
+      </a>
 
-      </div>
+      <div class="list-item-cross" (click)="crossClick()"></div>
+
     </div>
   `
 })
@@ -28,10 +31,20 @@ export class ListItemComponent implements OnInit {
   @Input()
   bodyText: string;
 
+  @Input()
+  link: string;
+
+  @Output('delete')
+  deleteEvent: EventEmitter<void> = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit(): void {
 
+  }
+
+  crossClick() {
+    this.deleteEvent.emit();
   }
 
 }

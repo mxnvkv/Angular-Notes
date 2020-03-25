@@ -1,0 +1,30 @@
+.form
+    max-width: 400px
+    margin: auto
+
+    *:not(button)
+        width: 100%
+        max-width: 400px
+
+    &-area:nth-child(2)
+        margin-top: 20px
+
+    input, textarea
+        outline: none
+
+    input
+        &.ng-invalid.ng-touched
+            border: 1px solid red
+
+    .buttons
+        display: flex
+        justify-content: flex-end
+
+        button
+            border: 1px solid black
+            outline: none
+            cursor: pointer
+
+            &:nth-of-type(1)
+                margin-right: 10px
+        
