@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NoteModel } from '../general/note.model';
 import { NoteActionsService } from '../general/note-actions.service';
 import { element } from 'protractor';
@@ -8,14 +8,15 @@ import { element } from 'protractor';
   styleUrls: ['./notes-list.component.sass'],
   template: `
     <div class="notes-list-wrapper">
-      <input type="text" (input)="filter($event.target.value)" class="search-input" placeholder="Search">
+      <input #filterInput type="text" (keyup)="filter($event.target.value)" class="search-input" placeholder="Search">
+
       <div class="items-list">
         <app-list-item 
-          *ngFor="let note of filteredNotes; index as i" 
-          [link]="i"
+          *ngFor="let note of filteredNotes;" 
+          [link]="generateNoteURL(note)"
           [headerText]="note.title" 
           [bodyText]="note.content"
-          (delete)="deleteNote(i)"
+          (delete)="deleteNote(note)"
            ></app-list-item>
       </div>
 
@@ -28,15 +29,26 @@ export class NotesListComponent implements OnInit {
   notes: NoteModel[] = new Array<NoteModel>();
   filteredNotes: NoteModel[] = new Array<NoteModel>();
 
+  @ViewChild('filterInput')
+  filterInputRef: ElementRef<HTMLInputElement>;
+
   constructor(private notesService: NoteActionsService) { }
 
   ngOnInit(): void {
     this.notes = this.notesService.returnAllNotes();
-    this.filteredNotes = this.notes;
+    // this.filteredNotes = this.notesService.returnAllNotes();
+    this.filter('');
   }
 
-  deleteNote(id: number) {
-    this.notesService.deleteNote(id);
+  deleteNote(note: NoteModel) {
+    let noteId = this.notesService.getId(note);
+    this.notesService.deleteNote(noteId);
+    this.filter(this.filterInputRef.nativeElement.value);
+  }
+
+  generateNoteURL(note: NoteModel) {
+    let noteId = this.notesService.getId(note);
+    return noteId;
   }
 
   filter(query: string) {
@@ -57,6 +69,9 @@ export class NotesListComponent implements OnInit {
     // allResults will include dublicate notes, but we won't show dublicate notes on the UI
     let uniqueResults = this.removeDublicates(allResults);
     this.filteredNotes = uniqueResults;
+
+    // sorting by relevancy
+    this.sortByRelevancy(allResults);
   }
 
   removeDublicates(arr: Array<any>): Array<any> {
@@ -82,5 +97,29 @@ export class NotesListComponent implements OnInit {
     })
 
     return relevantNotes;
+  }
+
+  sortByRelevancy(searchResults: NoteModel[]) {
+    let noteCountObject = {}; // key:value => NoteId:number ( note obj id : count )
+
+    searchResults.forEach(note => {
+      let noteId = this.notesService.getId(note);
+
+      if(noteCountObject[noteId]) {
+        noteCountObject[noteId] += 1;
+      } else {
+        noteCountObject[noteId] = 1;
+      }
+    })
+
+    this.filteredNotes = this.filteredNotes.sort((a: NoteModel, b: NoteModel) => {
+      let aId = this.notesService.getId(a);
+      let bId = this.notesService.getId(b);
+
+      let aCount = noteCountObject[aId];
+      let bCount = noteCountObject[bId];
+
+      return bCount - aCount;
+    })
   }
 }
