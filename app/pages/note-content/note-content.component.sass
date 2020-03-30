@@ -10,26 +10,70 @@
         max-width: 400px
 
     &-area:nth-child(2)
-        margin-top: 20px
+        margin-top: 30px
+
+    label
+        font-size: 20px
 
     input, textarea
         outline: none
+        background-color: $white
+        width: 400px
+        box-sizing: border-box
         font-family: Sen
+        border: 1px solid $black
+        font-size: 15px
+        padding: 5px
+        margin-top: 5px
 
     input
         &.ng-invalid.ng-touched
-            border: 1px solid red
+            border: 1px solid $red
+            // background-color: lighten($red, 45%)
 
     .buttons
         display: flex
         justify-content: flex-end
+        margin-top: 10px
 
-        button
-            border: 1px solid black
-            outline: none
-            cursor: pointer
-            font-family: Sen
+    button
+        border: 1px solid $black
+        outline: none
+        cursor: pointer
+        font-family: Sen
+        flex-basis: 80px
+        height: 25px
+        font-size: 12px
 
-            &:nth-of-type(1)
-                margin-right: 10px
+        &:nth-of-type(1)
+            margin-right: 10px
+
+        &.cancelButton
+            transition: .3s
+
+            &:hover
+                background-color: $red
+
+            &:active
+                background-color: darken($red, 10%)
+                transition: .25s
+
+        &.submitButton
+            transition: .3s
+
+            &:disabled
+                color: darken($gray, 5%)
+                background-color: lighten($gray, 10%)
+
+            &:disabled:hover
+                background-color: lighten($gray, 10%)
+
+            &:hover
+                background-color: $apricot
+
+            &:active
+                background-color: darken($apricot, 10%)
+                transition: .25s
+
+            
         

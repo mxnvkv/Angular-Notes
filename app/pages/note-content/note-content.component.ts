@@ -26,8 +26,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
         </div>
 
         <div class="buttons">
-          <button type="button" (click)="cancel()">Cancel</button>
-          <button type="submit" [disabled]="!myForm.valid">Save</button>
+          <button type="button" class="cancelButton" (click)="cancel()">Cancel</button>
+          <button type="submit" class="submitButton" [disabled]="!myForm.valid">Save</button>
         </div>
 
       </form>
