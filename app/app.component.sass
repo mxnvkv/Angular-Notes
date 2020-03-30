@@ -1,0 +1,20 @@
+@mixin font($f-name, $f-style, $f-weight, $f-url)
+	@font-face
+		font-family: $f-name
+		font-style: $f-style
+		font-weight: $f-weight
+		src: url($f-url)
+
+@include font('Alata', normal, 400, 'src/fonts/Alata/Alata-Regular.ttf')
+@include font('Sen', normal, 400, 'src/fonts/Sen/Sen-Regular.ttf')
+
+// colors
+$blue: 		#7DC9E7
+// $white: 	#F4F3EB
+$white: 	#F4F4F2
+$black:		#3C303E
+$apricot: 	#FFBE86
+$orange:	#F95A37
+
+body
+	background-color: $blue
