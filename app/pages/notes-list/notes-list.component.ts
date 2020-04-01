@@ -8,7 +8,7 @@ import { element } from 'protractor';
   styleUrls: ['./notes-list.component.sass'],
   template: `
     <div class="notes-list-wrapper">
-      <input #filterInput type="text" (keyup)="filter($event.target.value)" class="search-input" placeholder="Search">
+      <input #filterInput type="text" class="search-input" (keyup)="filter($event.target.value)" placeholder="Search">
 
       <div class="items-list">
         <app-list-item 
