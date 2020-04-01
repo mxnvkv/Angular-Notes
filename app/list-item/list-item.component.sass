@@ -19,6 +19,8 @@
 
         .list-item-cross
             opacity: 1
+            transform: scale(1)
+            transition: .3s
 
     &-cross
         position: absolute
@@ -26,14 +28,20 @@
         right: 10px
         width: 30px
         height: 30px
-        background-color: red
+        background-color: darken($red, 10%)
         opacity: 0
+        transform: scale(.8)
+        transition: .2s
+        background-image: url('src/img/cross.png')
+        background-position: center
+        background-repeat: no-repeat
+        background-size: 50%
 
         &:hover
-            background-color: darken(red, 5%)
+            background-color: darken($red, 23%)
 
         &:active
-            background-color: darken(red, 10%)
+            background-color: darken($red, 30%)
 
     &-content
         color: $black
